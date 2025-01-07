@@ -1,0 +1,96 @@
+/* Global Styles */
+body {
+    font-family: 'Poppins', Arial, sans-serif;
+    background: linear-gradient(135deg, #1e3c72, #2a5298);
+    color: #f9f9f9;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+}
+
+/* Clock Container */
+#clock-container {
+    border: 4px solid rgba(255, 255, 255, 0.3);
+    border-radius: 20px;
+    padding: 30px 40px;
+    background: rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
+    text-align: center;
+    width: 350px;
+}
+
+/* Cartoon Styling */
+#cartoon img {
+    width: 100px;
+    margin-bottom: 15px;
+    animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+/* Time Styling */
+#time {
+    font-size: 3rem;
+    font-weight: bold;
+    letter-spacing: 2px;
+    color: #ffdd59;
+    animation: glow 1s infinite alternate;
+}
+
+@keyframes glow {
+    from {
+        text-shadow: 0 0 10px #ffdd59, 0 0 20px #ffdd59, 0 0 30px #ffdd59;
+    }
+    to {
+        text-shadow: 0 0 20px #f4c542, 0 0 30px #f4c542, 0 0 40px #f4c542;
+    }
+}
+
+/* Date Styling */
+#date {
+    font-size: 1.8rem;
+    font-weight: 500;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Quote Styling */
+#quote {
+    font-size: 1rem;
+    font-style: italic;
+    margin-top: 15px;
+    color: #a8dadc;
+    letter-spacing: 0.5px;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 480px) {
+    #clock-container {
+        padding: 20px;
+        width: 90%;
+    }
+
+    #time {
+        font-size: 2.5rem;
+    }
+
+    #date {
+        font-size: 1.2rem;
+    }
+
+    #quote {
+        font-size: 0.9rem;
+    }
+}
