@@ -1,0 +1,26 @@
+#tag1{
+    color:blue;
+}
+#data{
+    color: black;
+}
+.one{
+    color:black;
+}
+
+.div1{
+    background-color: aquamarine;
+    color: red;
+}
+.div2{
+    background-color: yellow;
+    color: black;
+}
+.div3{
+    background-color: blue;
+    color: pink;
+}
+#button{
+    color: black;
+    size : 100px;
+}
