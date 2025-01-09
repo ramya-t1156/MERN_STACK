@@ -1,0 +1,35 @@
+-- with one parameter
+-- Content.jsx
+import React from 'react';
+
+function Content(props){
+    console.log(props.pData);
+    return(
+        <>
+        {props.pData}
+        </>
+    )
+
+}
+
+export default Content;
+
+
+
+-- App.jsx
+import React from 'react'
+import Footer from "./Footer"
+import Header from "./Header"
+import Content from "./Content"
+
+function App() {
+  let data1 = "the parent data"
+  return (
+      <>
+          {/* passing data to contenet 
+          App - Parent
+          content - Child*/}
+          <Content pData1 = {data1}/>    
+      </>
+  );
+}
