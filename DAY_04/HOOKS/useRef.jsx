@@ -15,6 +15,7 @@ function Footer(){
     const [data,setData] = useState(0);
     function handleClick(){
         refer.current.focus()
+        console.log(refer.current.value)
     }
     
     return (
