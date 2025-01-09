@@ -1,19 +1,20 @@
 import React from 'react'
-import {useEffect,useState} from 'react'
+import { useEffect,useState } from 'react'
 
 function ApiCall() {
-    const [data,setData] = useState([])
+    const [data,setdata]=useState([])
     useEffect(()=>{
-        const getData= async()=>{
-            let res = await fetch("https://jsonplaceholder.typicode.com/posts");
-            let resParse = await res.json();
-            setData(resParse)
+            const getData = async () => {
+            let res =await fetch("https://jsonplaceholder.typicode.com/posts")
+            let resParse = await res.json()
+            SVGMetadataElement(resParse)
+            console.log(resParse)
         }
-        getData()
     },[])
-  return (
+
+  return (  
     <div>
-        {data.map((i)=><li key = {i.id}>{i.body}</li>)}
+        {data.map((i)=><li>{i.body}</li>)}      
     </div>
   )
 }
