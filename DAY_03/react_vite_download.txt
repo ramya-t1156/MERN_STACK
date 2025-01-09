@@ -1,0 +1,19 @@
+To create react project
+
+in terminal
+
+
+How to create vite app
+
+1. npm create vite@latest
+2. react (framework)
+   javascript (variable)
+3. Done. Now run:
+	
+  cd myviteapp
+  npm install
+  npm run dev
+4. to start vite app
+   type 
+	npm start (in terminal)
+5 . open (http://localhost:5173/)
