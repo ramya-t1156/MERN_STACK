@@ -1,0 +1,19 @@
+1 . in CMD
+C:\Users\HP>node
+Welcome to Node.js v20.13.1.
+Type ".help" for more information.
+> let number = 10;
+undefined
+> number
+10
+> _
+10
+> _+20
+30
+
+
+2 . to run in vs code 
+
+in cmd of vscode
+
+node filename.js / filename
