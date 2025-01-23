@@ -1,0 +1,6 @@
+// accesing another server - in local network
+    /*  
+        (ensure both the servers are connected with same wifi)
+        1 . we have to get the ip address and port number of that server (ex - http://172.31.92.37:3000/ ) 
+            here , 172.31.92.37 - IP address , port number - 3000
+    */
