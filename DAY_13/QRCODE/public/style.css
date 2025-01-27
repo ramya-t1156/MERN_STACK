@@ -1,0 +1,18 @@
+body{
+    background-color: skyblue;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+form{
+    background-color: white;
+    justify-content: center;
+    align-items: center;
+    width: 300px;
+    text-align: center;
+    padding: 20px;
+}
+button{
+    background-color: green;
+    border-radius: 10px;
+}
