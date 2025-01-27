@@ -1,73 +1,321 @@
+### **Database and Collection Setup**
+```javascript
+// Switch to your database
+use school;
 
-# MongoDB CRUD Operations with Atomic Operators
+// Create a collection
+db.createCollection("students");
 
-## Description
-This script demonstrates CRUD operations in MongoDB using the native `mongodb` Node.js driver, along with examples of atomic operators like `$push`, `$pull`, `$exists`, `$in`, `$nin`, `$gt`, `$lt`, `$gte`, `$lte`, `$ne`, and `$eq`.
+// Insert initial documents
+db.students.insertMany([
+  { name: "John", age: 20, marks: [80, 85], address: { city: "New York", zip: 10001 } },
+  { name: "Alice", age: 18, marks: [90, 92], address: { city: "Los Angeles", zip: 90001 } },
+  { name: "Bob", age: 22, marks: [75, 78], address: { city: "Chicago", zip: 60601 } },
+]);
+```
 
-## Prerequisites
-- Install Node.js
-- Install MongoDB locally or use MongoDB Atlas
-- Install the MongoDB Node.js driver:
-  ```bash
-  npm install mongodb
-  ```
+---
 
-## Usage
-1. Start the MongoDB server.
-2. Run the script:
-   ```bash
-   node mongodb_crud_operations.js
+### **Insert Operations**
+```javascript
+// Insert a single document
+db.students.insertOne({
+  name: "Eve",
+  age: 21,
+  marks: [88, 89],
+  address: { city: "Houston", zip: 77001 },
+});
+
+// Insert multiple documents
+db.students.insertMany([
+  { name: "Tom", age: 23, marks: [65, 70], address: { city: "Miami", zip: 33101 } },
+  { name: "Jerry", age: 19, marks: [85, 80], address: { city: "Seattle", zip: 98101 } },
+]);
+```
+
+---
+
+### **Read Operations**
+```javascript
+// Find all documents
+db.students.find();
+
+// Find documents where age is greater than 20
+db.students.find({ age: { $gt: 20 } });
+
+// Find documents with a specific city
+db.students.find({ "address.city": "New York" });
+
+// Project specific fields
+db.students.find({}, { name: 1, age: 1, _id: 0 });
+
+// Find one document
+db.students.findOne({ name: "Alice" });
+```
+
+---
+
+### **Update Operations**
+```javascript
+// Update a single document (e.g., changing age)
+db.students.updateOne(
+  { name: "John" }, // Filter
+  { $set: { age: 21 } } // Update operation
+);
+
+// Update multiple documents (e.g., adding a new field)
+db.students.updateMany(
+  { age: { $lt: 21 } }, // Filter
+  { $set: { scholarship: true } } // Update operation
+);
+
+// Add a new subject to a student's marks array
+db.students.updateOne(
+  { name: "Alice" }, // Filter
+  { $push: { marks: 95 } } // Push operation
+);
+
+// Remove a specific mark from a student's marks array
+db.students.updateOne(
+  { name: "Bob" }, // Filter
+  { $pull: { marks: 75 } } // Pull operation
+);
+
+// Remove a field (e.g., removing the scholarship field)
+db.students.updateMany(
+  {}, // No filter, apply to all
+  { $unset: { scholarship: "" } } // Unset operation
+);
+```
+
+---
+
+### **Delete Operations**
+```javascript
+// Delete a single document
+db.students.deleteOne({ name: "Eve" });
+
+// Delete multiple documents
+db.students.deleteMany({ age: { $gt: 22 } });
+```
+
+---
+
+### **Examples of Atomic Operators**
+1. **$inc**: Increment a value.
+   ```javascript
+   db.students.updateOne(
+     { name: "John" },
+     { $inc: { age: 1 } } // Increment age by 1
+   );
    ```
 
-## Full Script with Comments
+2. **$min / $max**: Update only if a condition is met.
+   ```javascript
+   // Set age to the minimum value (e.g., 18) if it's higher
+   db.students.updateOne(
+     { name: "Alice" },
+     { $min: { age: 18 } }
+   );
+
+   // Set age to the maximum value (e.g., 25) if it's lower
+   db.students.updateOne(
+     { name: "Tom" },
+     { $max: { age: 25 } }
+   );
+   ```
+
+3. **$addToSet**: Add a value to an array only if it doesn’t exist.
+   ```javascript
+   db.students.updateOne(
+     { name: "Alice" },
+     { $addToSet: { marks: 95 } } // Add 95 only if it doesn't exist
+   );
+   ```
+
+4. **$pullAll**: Remove multiple elements from an array.
+   ```javascript
+   db.students.updateOne(
+     { name: "John" },
+     { $pullAll: { marks: [85, 80] } } // Remove these marks
+   );
+   ```
+
+---
+
+Here's an updated and more detailed MongoDB CRUD example that incorporates all the requested operators: `$push`, `$pull`, `$exists`, `$in`, `$nin`, `$gt`, `$lt`, `$gte`, `$lte`, `$ne`, and `$eq`.
+
+---
+
+### **Database and Collection Setup**
 ```javascript
-const { MongoClient } = require("mongodb"); // Import MongoDB Client
+// Switch to your database
+use myDatabase;
+
+// Create a collection
+db.createCollection("users");
+
+// Insert initial documents
+db.users.insertMany([
+  { name: "John", age: 25, scores: [80, 90], address: { city: "New York", zip: 10001 } },
+  { name: "Alice", age: 30, scores: [85, 95], address: { city: "Los Angeles", zip: 90001 } },
+  { name: "Bob", age: 35, scores: [70, 75], address: { city: "Chicago", zip: 60601 } },
+  { name: "Emma", age: 28, scores: [92, 88], address: { city: "Miami", zip: 33101 } }
+]);
+```
+
+---
+
+### **Update Operations Using Atomic Operators**
+
+#### **$push**
+Add an item to an array field.
+```javascript
+db.users.updateOne(
+  { name: "John" }, // Filter
+  { $push: { scores: 95 } } // Add 95 to John's scores array
+);
+```
+
+#### **$pull**
+Remove an item from an array field.
+```javascript
+db.users.updateOne(
+  { name: "Alice" }, // Filter
+  { $pull: { scores: 85 } } // Remove 85 from Alice's scores array
+);
+```
+
+#### **$exists**
+Find documents where a field exists or does not exist.
+```javascript
+// Documents where 'address' field exists
+db.users.find({ address: { $exists: true } });
+
+// Documents where 'phone' field does not exist
+db.users.find({ phone: { $exists: false } });
+```
+
+#### **$in**
+Find documents where a field value matches any value in a specified array.
+```javascript
+db.users.find({ age: { $in: [25, 30] } }); // Users with age 25 or 30
+```
+
+#### **$nin**
+Find documents where a field value does not match any value in a specified array.
+```javascript
+db.users.find({ age: { $nin: [25, 30] } }); // Users whose age is not 25 or 30
+```
+
+#### **$gt, $gte, $lt, $lte**
+Compare numeric values.
+```javascript
+// Age greater than 30
+db.users.find({ age: { $gt: 30 } });
+
+// Age less than or equal to 28
+db.users.find({ age: { $lte: 28 } });
+```
+
+#### **$ne**
+Find documents where a field value does not equal a specified value.
+```javascript
+db.users.find({ name: { $ne: "Emma" } }); // Users whose name is not Emma
+```
+
+#### **$eq**
+Find documents where a field value equals a specified value.
+```javascript
+db.users.find({ name: { $eq: "Bob" } }); // Users whose name is Bob
+```
+
+---
+
+### **Combination of Operators**
+You can combine multiple operators for advanced queries.
+
+#### **$and Example**
+Find users whose age is greater than 25 and live in "Miami."
+```javascript
+db.users.find({
+  $and: [
+    { age: { $gt: 25 } },
+    { "address.city": "Miami" }
+  ]
+});
+```
+
+#### **$or Example**
+Find users whose age is less than 30 or have a score of 92.
+```javascript
+db.users.find({
+  $or: [
+    { age: { $lt: 30 } },
+    { scores: 92 }
+  ]
+});
+```
+
+#### **$not Example**
+Find users who do **not** live in "New York."
+```javascript
+db.users.find({
+  "address.city": { $not: { $eq: "New York" } }
+});
+```
+
+---
+
+### **Code Example for GitHub**
+Save the script below as `mongodb_crud_operations.js`.
+
+```javascript
+const { MongoClient } = require("mongodb");
 
 // MongoDB connection URI and database name
-const uri = "mongodb://localhost:27017"; // Change if using a different host/port
-const dbName = "myDatabase"; // The name of the database
+const uri = "mongodb://localhost:27017";
+const dbName = "myDatabase";
 
 (async function () {
-  const client = new MongoClient(uri); // Create a new MongoDB client
+  const client = new MongoClient(uri);
 
   try {
-    await client.connect(); // Connect to the MongoDB server
+    await client.connect();
     console.log("Connected to MongoDB");
 
-    const db = client.db(dbName); // Switch to the specified database
-    const users = db.collection("users"); // Create or access the "users" collection
+    const db = client.db(dbName);
+    const users = db.collection("users");
 
-    // Example: $push - Add an item to an array field
+    // Example: $push
     await users.updateOne({ name: "John" }, { $push: { scores: 95 } });
 
-    // Example: $pull - Remove an item from an array field
+    // Example: $pull
     await users.updateOne({ name: "Alice" }, { $pull: { scores: 85 } });
 
-    // Example: $exists - Check if a field exists
+    // Example: $exists
     const existsResult = await users.find({ address: { $exists: true } }).toArray();
     console.log("Documents with address:", existsResult);
 
-    // Example: $in - Match any value in an array
+    // Example: $in
     const inResult = await users.find({ age: { $in: [25, 30] } }).toArray();
     console.log("Users aged 25 or 30:", inResult);
 
-    // Example: $gt - Greater than a specific value
+    // Example: $gt
     const gtResult = await users.find({ age: { $gt: 30 } }).toArray();
     console.log("Users older than 30:", gtResult);
 
-    // Example: $not - Match values not equal to a specific condition
+    // Example: $not
     const notResult = await users.find({ "address.city": { $not: { $eq: "New York" } } }).toArray();
     console.log("Users not living in New York:", notResult);
 
   } catch (err) {
-    console.error("Error:", err.message); // Handle errors
+    console.error("Error:", err.message);
   } finally {
-    await client.close(); // Close the connection
+    await client.close();
     console.log("MongoDB connection closed");
   }
 })();
 ```
 
-## Examples Covered
-- Insert, Update, Delete, and Find operations
-- Use of atomic operators such as `$push`, `$pull`, `$exists`, `$in`, and more.
+---
