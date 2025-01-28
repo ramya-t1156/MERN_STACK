@@ -1,0 +1,5 @@
+npm create vite@latest
+npm i axios
+
+cd vite-project
+npm run dev
