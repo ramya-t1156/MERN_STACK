@@ -1,0 +1,5 @@
+npm init
+npm i nodemon express mongoose morgan
+
+npm i cors
+npm start
