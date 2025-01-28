@@ -4,3 +4,6 @@
         1 . we have to get the ip address and port number of that server (ex - http://172.31.92.37:3000/ ) 
             here , 172.31.92.37 - IP address , port number - 3000
     */
+
+
+npm init
