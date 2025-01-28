@@ -7,3 +7,5 @@
 
 
 npm init
+npm i nodemon 
+npm start
